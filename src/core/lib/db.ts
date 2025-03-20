@@ -12,4 +12,12 @@ const pool: Pool = createPool({
   queueLimit: 0,
 });
 
-export default pool;
+export async function query<T>(sql: string, params: any[] = []): Promise<T> {
+  try {
+    const [rows] = await pool.execute(sql, params)
+    return rows as T
+  } catch (error) {
+    console.error("Database query error:", error)
+    throw error
+  }
+}
