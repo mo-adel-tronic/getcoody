@@ -1,9 +1,8 @@
 'use client'
-import UserType from "@/features/user/domain/UserEntity"
-import { addUser } from "@/features/user/UserDi"
-import AppForm from "@/ui/atoms/blocks/AppForm"
 
-export default function ProfileDataForm({ user }: { user: UserType }) {
+import { UserEntity } from "@/types"
+
+export default function ProfileDataForm({ user }: { user: UserEntity }) {
   return (
     <AppForm
             fields={[
@@ -37,11 +36,11 @@ export default function ProfileDataForm({ user }: { user: UserType }) {
                 }
               }
             ]}
-            onSubmit={(data) => {
+            onSubmit={(data: UserEntity) => {
               user.display_name = data.display_name
               user.fullname = data.fullname
               user.phone = data.phone
-              addUser.call(user)
+              // addUser.call(user)
             }}
             inputVals={user ? {
               fullname: user.fullname,

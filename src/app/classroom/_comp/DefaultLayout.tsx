@@ -5,6 +5,7 @@ import H2 from "@/ui/atoms/text/H2";
 import ProfileDataForm from "./ProfileDataForm";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { UserEntity } from "@/types";
+import { DefaultAppSidebar } from "@/ui/components/DefaultAppSidebar";
 
 export default function DefaultLayout({ user }: { user: UserEntity }) {
   return (
