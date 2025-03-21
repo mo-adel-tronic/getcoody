@@ -1,16 +1,14 @@
-'use client'
-
-import { useSession } from "next-auth/react";
 import AppContainer from "../atoms/blocks/AppContainer";
 import H1 from "../atoms/text/H1";
 import AppText from "../atoms/text/AppText";
-import { Loader } from "lucide-react";
 import { ImageSrc, RoutesName } from "@/core/utils/constants";
 import AppLink from "../atoms/controls/AppLink";
 import AppLottie from "../atoms/media/AppLottie";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/core/utils/NextAuth";
 
-export default function Header1() {
-  const { data: session, status } = useSession() as { data: { user: { email: string } } | null, status: string };
+export default async function Header1() {
+  const session = await getServerSession(authOptions);
   return (
     <header className="app-gradient py-4 mb-5 min-h-[70vh] shadow-md shadow-slate-300">
       <AppContainer>
@@ -25,12 +23,10 @@ export default function Header1() {
           />
           <div className="flex justify-center lg:justify-start pb-8">
           {
-            status == 'loading' ?
-            <Loader /> :
             session && session.user?.email ? 
             (
               <AppLink
-                href={RoutesName.editProfile}
+                href={RoutesName.classroom}
                 className="mt-6 font-bold text-[0.8em]"
               >
                 الملف الشخصي

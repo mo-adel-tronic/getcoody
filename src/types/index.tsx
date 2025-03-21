@@ -1,4 +1,4 @@
-export type LayoutType = 'default' | 'main' | 'pre' | 'post' | 'result' | 'loading' | 'notfound'
+export type LayoutType = 'default' | 'main' | 'pre' | 'post' | 'result' | 'loading'
 
 export interface AppResponse {
     message: string

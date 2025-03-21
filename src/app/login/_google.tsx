@@ -13,7 +13,7 @@ export default function GoogleSignInPage() {
           () => {
             signIn("google",{
               redirect: true,
-              callbackUrl: RoutesName.editProfile
+              callbackUrl: RoutesName.classroom
             });
             
           }

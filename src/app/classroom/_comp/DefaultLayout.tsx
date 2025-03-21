@@ -1,11 +1,8 @@
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { DefaultAppSidebar } from "@/ui/components/DefaultAppSidebar";
 import ProfileHeader from "./ProfileHeader";
 import { RoutesName } from "@/core/utils/constants";
 import AppSection from "@/ui/atoms/blocks/AppSection";
 import H2 from "@/ui/atoms/text/H2";
 import ProfileDataForm from "./ProfileDataForm";
-import UserType from "@/features/user/domain/UserEntity";
 
 export default function DefaultLayout({ user }: { user: UserType }) {
   return (
