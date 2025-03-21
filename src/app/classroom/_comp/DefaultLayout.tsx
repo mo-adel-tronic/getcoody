@@ -3,8 +3,10 @@ import { RoutesName } from "@/core/utils/constants";
 import AppSection from "@/ui/atoms/blocks/AppSection";
 import H2 from "@/ui/atoms/text/H2";
 import ProfileDataForm from "./ProfileDataForm";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { UserEntity } from "@/types";
 
-export default function DefaultLayout({ user }: { user: UserType }) {
+export default function DefaultLayout({ user }: { user: UserEntity }) {
   return (
       <SidebarProvider>
       <DefaultAppSidebar />
