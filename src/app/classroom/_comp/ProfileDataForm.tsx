@@ -1,6 +1,7 @@
 'use client'
 
 import { UserEntity } from "@/types"
+import AppForm from "@/ui/atoms/blocks/AppForm"
 
 export default function ProfileDataForm({ user }: { user: UserEntity }) {
   return (
