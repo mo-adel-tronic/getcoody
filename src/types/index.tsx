@@ -1,5 +1,18 @@
 export type LayoutType = 'default' | 'main' | 'pre' | 'post' | 'result' | 'loading'
 
+export interface MainNavItemType {
+    title: string
+    url: string
+    icon: any
+    isActive?: boolean
+    items?: MainNavItemType[]
+}
+
+export interface ProfileHeaderItemType {
+    text: string
+    href: string
+}
+
 export interface AppResponse {
     message: string
     data: any
@@ -14,8 +27,23 @@ export interface UserEntity {
     phone: string
     account_valid?: 0 | 1
     pre_exam_passed?: 0 | 1
-    learning_passed?: 0 | 1
+    learning_passed?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
     post_exam_passed?: 0 | 1
     results?: string
     user_group?: 1 | 2
+}
+
+export interface SubjectEntity {
+    id: number
+    title: string
+    title_prefix: string
+    targets: string
+    lessons?: LessonEntity[]
+}
+
+export interface LessonEntity {
+    readonly id?: number
+    title: string
+    lesson_order: number
+    subject_id: number
 }

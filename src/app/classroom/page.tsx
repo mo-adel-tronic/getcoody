@@ -1,44 +1,33 @@
-import { getUser } from "@/api/users";
-import { authOptions } from "@/core/utils/NextAuth";
-import { LayoutType, UserEntity } from "@/types";
-import AppLoader from "@/ui/atoms/media/AppLoader";
-import { getServerSession } from "next-auth";
-import { signOut } from "next-auth/react";
-import { notFound } from "next/navigation";
+import H1 from "@/ui/atoms/text/H1";
 import DefaultLayout from "./_comp/DefaultLayout";
+import { PagesName, RoutesName } from "@/core/utils/constants";
+import ClassroomBody from "./_comp/ClassroomBody";
+import { layoutHandler } from "@/core/lib/LayoutHandler";
 
 export default async function page() {
-    const session = await getServerSession(authOptions);
-    let userData : UserEntity = {
-        fullname: '',
-        phone: '',
-        display_name: '',
-        email: ''
-    };
-    let layout : LayoutType = 'loading'
-    if(session?.user && session.user.email) {
-        const user = await getUser(session.user.email)
-        if(user.error) {
-            console.error(user.message)
-        } else {
-            if (user.data) {
-                userData = user.data
-                layout = 'default'
-            }
-        }
-    } else {
-        signOut()
-        notFound()
-    }
-
-    switch (layout) {
-        case 'loading':
-            return (
-                <div className="min-h-screen flex justify-center items-center text-lg">
-                  <AppLoader />
-                </div>
-              )
-        case 'default':
-            return <DefaultLayout user={userData} />
-    }
+  const [layout, userData, subjects] = await layoutHandler();
+  return (
+    <DefaultLayout
+    layout={layout}
+    userData={userData}
+    subjects={subjects}
+    pageTitle="تحليلات عامة"
+    currentRoute={RoutesName.classroom}
+    profileHeaderItems={[
+      {
+        text: PagesName.classroom,
+        href: RoutesName.classroom
+      }
+    ]}
+    def={<div className="text-center px-3">
+      <H1 mainText="لابد من إكتمال البيانات الشخصية الخاصة بك أولًا ثم الإنتهاء من المتطلبات القبلية لعرض محتوي الصفحة" />
+    </div>}
+    pre={<div className="text-center px-3">
+      <H1 mainText="لابد من الإنتهاء من المتطلبات القبلية لعرض محتوي الصفحة" />
+    </div>}
+    main={<ClassroomBody user={userData} subjects={subjects} />}
+    post={<ClassroomBody user={userData} subjects={subjects} />}
+    result={<ClassroomBody user={userData} subjects={subjects} />}
+    />
+  );
 }

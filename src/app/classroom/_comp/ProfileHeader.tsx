@@ -1,4 +1,3 @@
-'use client'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,10 +6,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import AppBtn from "@/ui/atoms/controls/AppBtn";
 import { Separator } from "@radix-ui/react-separator";
-import { signOut } from "next-auth/react";
 import React from "react";
+import SignoutBtn from "./SignoutBtn";
 interface ItemProps {
   text: string;
   href: string;
@@ -19,6 +17,7 @@ interface ProfileHeaderProps {
   items: ItemProps[];
 }
 export default function ProfileHeader({ items }: ProfileHeaderProps) {
+  
   return (
     <header className="flex justify-between me-4 h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2 px-4">
@@ -42,14 +41,7 @@ export default function ProfileHeader({ items }: ProfileHeaderProps) {
         </Breadcrumb>
       </div>
       <div>
-      <AppBtn
-      className="bg-red-500 hover:bg-red-700 text-sm font-bold"
-      onClick={() => {
-        signOut()
-      }}
-      >
-        تسجيل خروج
-      </AppBtn>
+      <SignoutBtn api_k={process.env.NEXTAUTH_SECRET || ''} />
       </div>
     </header>
   );

@@ -43,3 +43,37 @@ export async function getUser(email:string): Promise<AppResponse> {
         }
     }
 }
+
+export async function addUser(user: UserEntity): Promise<AppResponse> {
+    try {
+        const req = await query<UserEntity[]>("INSERT INTO users (fullname, email, display_name, phone, account_valid) VALUES (?,?,?,?, 1)", [user.fullname, user.email, user.display_name, user.phone])
+        return Promise.resolve({
+            message: '1',
+            data: req,
+            error: false
+        })
+    } catch (error) {
+        return {
+            message: error as string,
+            data: null,
+            error: true
+        }
+    }
+}
+
+export async function updateProfile(user: UserEntity): Promise<AppResponse> {
+    try {
+        const req = await query<UserEntity[]>("UPDATE users SET fullname = ?, display_name = ?, phone = ? WHERE id = ?", [user.fullname, user.display_name, user.phone, user.id])
+        return Promise.resolve({
+            message: '1',
+            data: req,
+            error: false
+        })
+    } catch (error) {
+        return {
+            message: error as string,
+            data: null,
+            error: true
+        }
+    }
+}

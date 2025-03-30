@@ -2,7 +2,7 @@
 
 import { Sidebar, SidebarContent, SidebarHeader, useSidebar } from "@/components/ui/sidebar";
 import { RoutesName } from "@/core/utils/constants";
-import { Home, Loader } from "lucide-react";
+import { FileQuestionIcon, Home, Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import AppImage from "../atoms/media/AppImage";
 import { NavMain } from "./NavMain";
@@ -14,10 +14,20 @@ const navMain = [
     title: "الصفحة الرئيسية",
     url: RoutesName.home,
     icon: Home
-  }
+  },
+  {
+    title: "البيانات الشخصية",
+    url: RoutesName.profile,
+    icon: FileQuestionIcon
+  },
+  {
+    title: "الاختبارات القبلية",
+    url: RoutesName.preExam,
+    icon: FileQuestionIcon
+  },
 ]
 
-export function DefaultAppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function PreAppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const {open} = useSidebar()
   const { data: session, status } = useSession() as { data: { user: { image: string, name: string } } | null, status: string };
   return (

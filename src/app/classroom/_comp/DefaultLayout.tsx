@@ -1,38 +1,110 @@
-import ProfileHeader from "./ProfileHeader";
-import { RoutesName } from "@/core/utils/constants";
-import AppSection from "@/ui/atoms/blocks/AppSection";
-import H2 from "@/ui/atoms/text/H2";
-import ProfileDataForm from "./ProfileDataForm";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { UserEntity } from "@/types";
-import { DefaultAppSidebar } from "@/ui/components/DefaultAppSidebar";
+import AppLoader from "@/ui/atoms/media/AppLoader";
+import ClassroomPage from "./ClassroomPage";
+import MainNavHelper from "@/core/lib/MainNavHelper";
+import { PagesName, RoutesName } from "@/core/utils/constants";
+import { LayoutType, ProfileHeaderItemType, SubjectEntity, UserEntity } from "@/types";
 
-export default function DefaultLayout({ user }: { user: UserEntity }) {
-  return (
-      <SidebarProvider>
-      <DefaultAppSidebar />
-      <SidebarInset>
-        <ProfileHeader
-                items={[
-                  {
-                    text: "الرئيسية",
-                    href: RoutesName.home,
-                  },
-                  {
-                    text: "البيانات الشخصية",
-                    href: RoutesName.editProfile,
-                  },
-                ]}
-              />
-              <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                <AppSection withBG={true}>
-                  <div className="w-2/3 mx-auto text-center">
-                    <H2 text="تحديث البيانات الشخصية" />
-                  </div>
-                  <ProfileDataForm user={user} />
-                </AppSection>
-              </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
+interface Props {
+  pageTitle: string
+  currentRoute: string
+  layout: LayoutType
+  userData: UserEntity
+  subjects: SubjectEntity[]
+  profileHeaderItems: ProfileHeaderItemType[];
+  def: React.ReactNode;
+  pre: React.ReactNode;
+  main: React.ReactNode;
+  post: React.ReactNode;
+  result: React.ReactNode;
+}
+export default async function DefaultLayout({layout, userData, subjects, currentRoute, pageTitle, profileHeaderItems, def, pre, main, post, result}: Props) {
+
+  switch (layout) {
+      case "loading":
+        return (
+          <div className="min-h-screen flex justify-center items-center text-lg">
+            <AppLoader />
+          </div>
+        );
+      case "default":
+        return (
+          <ClassroomPage
+            pageTitle={pageTitle}
+            mainNav={MainNavHelper(layout, currentRoute)}
+            profileHeaderItems={[
+              {
+                text: PagesName.home,
+                href: RoutesName.home,
+              },
+              ...profileHeaderItems
+            ]}
+          >
+           {def}
+          </ClassroomPage>
+        );
+      case "pre":
+        return (
+          <ClassroomPage
+            pageTitle={pageTitle}
+            mainNav={MainNavHelper(layout, currentRoute)}
+            profileHeaderItems={[
+              {
+                text: PagesName.home,
+                href: RoutesName.home,
+              },
+              ...profileHeaderItems
+            ]}
+          >
+           {pre}
+          </ClassroomPage>
+        );
+      case "main":
+        return (
+          <ClassroomPage
+            pageTitle={pageTitle}
+            mainNav={MainNavHelper(layout, currentRoute!, subjects, userData.learning_passed)}
+            profileHeaderItems={[
+              {
+                text: PagesName.home,
+                href: RoutesName.home,
+              },
+              ...profileHeaderItems
+            ]}
+          >
+            {main}
+          </ClassroomPage>
+        );
+      case "post":
+        return (
+          <ClassroomPage
+            pageTitle={pageTitle}
+            mainNav={MainNavHelper(layout, currentRoute, subjects, userData.learning_passed)}
+            profileHeaderItems={[
+              {
+                text: PagesName.home,
+                href: RoutesName.home,
+              },
+              ...profileHeaderItems
+            ]}
+          >
+            {post}
+          </ClassroomPage>
+        );
+      case "result":
+        return (
+          <ClassroomPage
+            pageTitle={pageTitle}
+            mainNav={MainNavHelper(layout, currentRoute, subjects, userData.learning_passed)}
+            profileHeaderItems={[
+              {
+                text: PagesName.home,
+                href: RoutesName.home,
+              },
+              ...profileHeaderItems
+            ]}
+          >
+            {result}
+          </ClassroomPage>
+        );
+    }
 }

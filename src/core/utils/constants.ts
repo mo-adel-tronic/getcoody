@@ -12,22 +12,28 @@ export class RoutesName {
 
 
     static classroom : string = '/classroom';
-    static profile : string = '/profile';
-    static editProfile : string = '/editprofile';
+    static profile : string = '/classroom/profile';
     static community : string = '/community';
-    static preExam : string = '/pre1';
-    static preServey : string = '/pre2';
-    static course1 : string = '/courses/1';
-    static course2 : string = '/courses/2';
-    static course3 : string = '/courses/3';
-    static course4 : string = '/courses/4';
-    static course5 : string = '/courses/5';
+    static preExam : string = '/classroom/pre1';
+    static preServey : string = '/classroom/pre2';
+    static postExam : string = '/classroom/post1';
+    static postServey : string = '/classroom/post2';
+    static subject : string = '/classroom/subjects';
+    static results : string = '/classroom/results';
+}
 
-    // ************* Lessons Course 1 ****************
-    static c1Lesson1 : string = RoutesName.course1 + '/lessons/1'
-    static c1Lesson2 : string = RoutesName.course1 + '/lessons/2'
-    static c1Lesson3 : string = RoutesName.course1 + '/lessons/3'
-    static c1Lesson4 : string = RoutesName.course1 + '/lessons/4'
+export class PagesName {
+    static home : string = 'الرئيسية';
+    static classroom : string = 'تحليلات عامة';
+    static profile : string = 'البيانات الشخصية';
+    static results : string = 'النتائج';
+    static pre : string = 'المتطلبات القبلية';
+    static post : string = 'المتطلبات البعدية';
+    static preExam : string = 'الإختبار القبلي';
+    static preServey : string = 'الاستبيان القبلي';
+    static postExam : string = 'الإختبار البعدي';
+    static postServey : string = 'الاستبيان البعدي';
+    static subject : string = 'الموضوعات';
 }
 
 export class ImageSrc {
@@ -53,10 +59,8 @@ export class ImageSrc {
     static teacher1 : string = "/images/webp/1.webp"
     static teacher2 : string = "/images/webp/2.webp"
     static teacher3 : string = "/images/webp/3.webp"
-
-
-    static courseBg1 : string = '/webp/courses/1.webp'
-    static courseBg2 : string = '/webp/courses/2.webp'
-    static courseBg3 : string = '/webp/courses/3.webp'
-    static courseBg4 : string = '/webp/courses/4.webp'
+    static courseBg1 : string = '/images/webp/courses/1.webp'
+    static courseBg2 : string = '/images/webp/courses/2.webp'
+    static courseBg3 : string = '/images/webp/courses/3.webp'
+    static courseBg4 : string = '/images/webp/courses/4.webp'
 }
