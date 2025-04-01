@@ -46,4 +46,21 @@ export interface LessonEntity {
     title: string
     lesson_order: number
     subject_id: number
+    video?: string
+    content?: string
+    task_details?: string
+    task_link?: string
+    activity_details?: string
+    activity_chat_notes?: string
+    activity_answers?: string
+    resources?: string
+}
+
+export interface QuestionEntity {
+    readonly id?: number
+    question: string
+    choices: string
+    answer: number
+    feedback?: string
+    lesson_id?: number
 }

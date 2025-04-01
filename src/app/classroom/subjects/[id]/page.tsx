@@ -6,7 +6,7 @@ import SubjectBody from "../../_comp/SubjectBody";
 import { isSubjectOpen } from "@/core/lib/MainNavHelper";
 import { SubjectEntity } from "@/types";
 
-export default async function page({params} :  {
+export default async function SubjectPage({params} :  {
     params: Promise<{ id: string }>
   }) {
   const [layout, userData, subjects] = await layoutHandler();
@@ -37,7 +37,7 @@ export default async function page({params} :  {
     pre={<></>}
     main={
       isSubjectOpen(parseInt(id), userData.learning_passed ?? 1) ?
-      <SubjectBody subject={subject} /> : 
+      <SubjectBody subject={subject} userId={userData.id || 0} isSubjectEnd={(userData.learning_passed || 1) > parseInt(id)} /> : 
       <div className="flex justify-center items-center flex-col grow">
         <h1>لا يمكنك دراسة هذا الموضوع الأن ... يجب الإنتهاء أولًا من الموضوع السابق</h1>
       </div>

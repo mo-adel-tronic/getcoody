@@ -21,7 +21,7 @@ export async function addLesson(lesson : LessonEntity): Promise<AppResponse> {
 
 export async function getsubjectLessons(subjectId: number): Promise<AppResponse> {
     try {
-        const s = await query<LessonEntity[]>("SELECT id, title, lesson_order, subject_id FROM lessons WHERE subject_id = ? ORDER BY lesson_order", [subjectId])
+        const s = await query<LessonEntity[]>("SELECT * FROM lessons WHERE subject_id = ? ORDER BY lesson_order", [subjectId])
         const data = appCache(() => {
             return Promise.resolve({
                 message: '1',
@@ -31,6 +31,40 @@ export async function getsubjectLessons(subjectId: number): Promise<AppResponse>
         }, [`/lessons/${subjectId}`], {revalidate: 1800})
         let d = await data()
         return d;
+    } catch (error) {
+        return {
+            message: error as string,
+            data: null,
+            error: true
+        }
+    }
+}
+
+export async function getCurrentLesson(subjectId: number, userId: number): Promise<AppResponse> {
+    try {
+        const s = await query<LessonEntity[]>("SELECT lessons.id as lessonID FROM lessons INNER JOIN lesson_tracking ON lesson_tracking.lesson_id = lessons.id WHERE lesson_tracking.user_id = ? AND lessons.subject_id = ? ORDER BY lessons.lesson_order DESC LIMIT 1", [userId, subjectId])
+        return Promise.resolve({
+            message: '1',
+            data: s as unknown as LessonEntity[],
+            error: false
+        });
+    } catch (error) {
+        return {
+            message: error as string,
+            data: null,
+            error: true
+        }
+    }
+}
+
+export async function getLessonQuestions(lessonId: number): Promise<AppResponse> {
+    try {
+        const s = await query<LessonEntity[]>("SELECT * FROM lesson_questions WHERE lesson_id = ?", [lessonId])
+        return Promise.resolve({
+            message: '1',
+            data: s as unknown as LessonEntity[],
+            error: false
+        });
     } catch (error) {
         return {
             message: error as string,

@@ -1,5 +1,6 @@
-import { LayoutType, MainNavItemType, SubjectEntity } from "@/types";
+import { LayoutType, LessonEntity, MainNavItemType, SubjectEntity } from "@/types";
 import { PagesName, RoutesName } from "../utils/constants";
+import { BookOpen } from "lucide-react";
 
 export function isSubjectOpen(
   subjectId: number,
@@ -113,4 +114,15 @@ export default function MainNavHelper(
         },
       ];
   }
+}
+
+export function lessonNavHelper(lessons : LessonEntity[], currentLessonId : number, subjectId : number) : MainNavItemType[] {
+  return lessons.map(lesson =>  {
+    return {
+      title: lesson.title,
+      icon: 'BookOpen',
+      isActive: lesson.id === currentLessonId,
+      url: RoutesName.subject + '/' + subjectId + '/lessons/' + lesson.id
+    }
+  })
 }

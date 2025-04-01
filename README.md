@@ -84,3 +84,28 @@
 }
 ]
 ```
+
+
+```tsx
+<Card className="sticky top-8 bg-background-light p-4 border-x-2 border-secondary rounded-lg shadow-lg">
+            <CardHeader>
+            <AppImage
+                src={ImageSrc.courseBg1}
+                alt={subject.title}
+                width={1200}
+                height={400}
+                className="rounded-lg object-cover shadow-lg w-full h-[200px]"
+              />
+            </CardHeader>
+            <CardContent>
+              <AppLink
+                href={"/classroom/subjects/1/lessons/1"}
+                className="w-full mb-4 text-center bg-secondary hover:bg-secondary-hover"
+              >
+                <span className="text-secondary-foreground font-bold">
+                  إبدء الأن
+                </span>
+              </AppLink>
+            </CardContent>
+          </Card>
+```

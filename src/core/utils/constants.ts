@@ -33,7 +33,8 @@ export class PagesName {
     static preServey : string = 'الاستبيان القبلي';
     static postExam : string = 'الإختبار البعدي';
     static postServey : string = 'الاستبيان البعدي';
-    static subject : string = 'الموضوعات';
+    static subject : string = 'صفحة الموضوع';
+    static lesson : string = 'صفحة الدرس'
 }
 
 export class ImageSrc {
@@ -59,8 +60,4 @@ export class ImageSrc {
     static teacher1 : string = "/images/webp/1.webp"
     static teacher2 : string = "/images/webp/2.webp"
     static teacher3 : string = "/images/webp/3.webp"
-    static courseBg1 : string = '/images/webp/courses/1.webp'
-    static courseBg2 : string = '/images/webp/courses/2.webp'
-    static courseBg3 : string = '/images/webp/courses/3.webp'
-    static courseBg4 : string = '/images/webp/courses/4.webp'
 }
