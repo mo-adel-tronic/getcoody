@@ -11,9 +11,9 @@ export default async function middleware(request: NextRequest) {
   if (token && pathname.startsWith(RoutesName.login)) {
     return NextResponse.redirect(new URL(RoutesName.home, request.url));
   }
-  if (!token && pathname.startsWith(RoutesName.classroom)) {
-    return NextResponse.redirect(new URL(RoutesName.login, request.url));
-  }
+  // if (!token && pathname.startsWith(RoutesName.classroom)) {
+  //   return NextResponse.redirect(new URL(RoutesName.login, request.url));
+  // }
   if(pathname.startsWith('/api') && !pathname.startsWith('/api/auth')) {
     const key = request.headers.get('api_key')
     if (!key) {
