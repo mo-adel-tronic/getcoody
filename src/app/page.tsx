@@ -14,8 +14,8 @@ export default function Home() {
         <Header1 />
         <About />
         <ServiceSection />
-        <ResearcherSection />
-        <TeacherSection />
+{/*         <ResearcherSection />
+        <TeacherSection /> */}
         <BlogSection />
         <Footer />
       </AppScrollSection>
