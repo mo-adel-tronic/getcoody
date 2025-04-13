@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
 
-export default function ClassroomLayout ({children} : Readonly<{
+export default async function ClassroomLayout ({children} : Readonly<{
     children: React.ReactNode;
   }>) {
     return <>{children}

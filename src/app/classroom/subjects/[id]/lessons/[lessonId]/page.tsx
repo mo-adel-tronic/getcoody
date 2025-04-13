@@ -1,7 +1,7 @@
-import { getsubjectLessons } from "@/api/lessons";
+import { getsubjectLessons, getUserTracking } from "@/api/lessons";
 import LessonLayout from "@/app/classroom/_comp/LessonLayout";
 import { layoutHandler } from "@/core/lib/LayoutHandler";
-import { LessonEntity } from "@/types";
+import { LessonEntity, UserTracker } from "@/types";
 import { notFound } from "next/navigation";
 
 export default async function LessonPage({params} :  {
@@ -22,6 +22,7 @@ export default async function LessonPage({params} :  {
   if(!lesson) {
     notFound()
   }
+  const userTrackingData : UserTracker = (await getUserTracking(parseInt(lessonId), userData.id || 0)).data[0]
 
   return (
     <LessonLayout 
@@ -30,6 +31,8 @@ export default async function LessonPage({params} :  {
     currentLessonId={parseInt(lessonId)}
     lessons={lessons}
     lesson={lesson}
+    userTracking={userTrackingData}
+    userData={userData}
     />
   );
 }

@@ -28,6 +28,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { MainNavItemType } from "@/types"
+import { PagesName } from "@/core/utils/constants";
 
 export function NavMain({
   items,
@@ -73,7 +74,7 @@ export function NavMain({
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild className={`text-foreground-title ${subItem.isActive ? 'bg-background-light border-l-4 border-secondary-hover rounded-l-none' : ""}`}>
                           {SubIcon && (
-                              subItem.icon === "LockOpen" ? 
+                              subItem.icon === "LockOpen" || item.title !== PagesName.subject ? 
                               (
                                 <a href={subItem.url}>
                                   <SubIcon className="!text-green-500" />

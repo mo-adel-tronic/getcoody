@@ -19,7 +19,7 @@ export default async function page() {
       }
     ]}
     def={<></>}
-    pre={<AppFormFrame src="https://forms.office.com/Pages/ResponsePage.aspx?id=zZ541qgBl0-fhapIKR9VcNSrYWLptQZNsjgRxkD3LUJUQUpROEZFWE9GVEJaMjNTUDBWMFZWRllXNS4u&embed=true" />}
+    pre={<AppFormFrame src="https://forms.office.com/r/UrM2vPMUNp?embed=true" />}
     main={<></>}
     post={<></>}
     result={<></>}

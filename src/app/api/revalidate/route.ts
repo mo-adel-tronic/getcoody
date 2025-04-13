@@ -1,9 +1,9 @@
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const req = await request.json();
-  let { email } = req;
+  const { email } = req;
   if (!email) {
     return NextResponse.json(
       {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     return NextResponse.json({
-      message: "revalidated error",
+      message: "revalidated error: " + (error instanceof Error ? error.message : "Unknown error"),
       data: null,
       error: true
     }, {status: 500})

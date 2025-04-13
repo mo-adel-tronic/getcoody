@@ -12,7 +12,7 @@ export async function getAllUsers(): Promise<AppResponse> {
                 error: false
             });
         }, ['/users'], {revalidate: 1800})
-        let d = await data()
+        const d = await data()
         return d;
     } catch (error) {
         return {

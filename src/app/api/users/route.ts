@@ -12,7 +12,7 @@ export async function GET () {
 
 export async function POST(request: Request) {
   const req = await request.json();
-  let { fullname, email, display_name, phone } = req;
+  const { fullname, email, display_name, phone } = req;
   if (!fullname || !email || !display_name || !phone) {
     return NextResponse.json(
       {

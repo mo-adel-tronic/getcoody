@@ -33,7 +33,7 @@ export class PagesName {
     static preServey : string = 'الاستبيان القبلي';
     static postExam : string = 'الإختبار البعدي';
     static postServey : string = 'الاستبيان البعدي';
-    static subject : string = 'صفحة الموضوع';
+    static subject : string = 'الموضوعات';
     static lesson : string = 'صفحة الدرس'
 }
 
@@ -43,15 +43,17 @@ export class ImageSrc {
     static logoLG : string = '/images/png/logo-lg.png'
 
     /********************* Json ********************** */
-    static lottieHeader : string = "images/lottie/header.json"
-    static lottieAbout : string = "images/lottie/about.json"
+    static lottieHeader : string = "/images/lottie/header.json"
+    static lottieAbout : string = "/images/lottie/about.json"
+    static lottieAgent : string = "/images/lottie/agent.json"
 
     /********************* SVG ********************** */
-    static svgService : string = "images/svg/service.svg"
-    static svgPattern : string = "images/svg/pattern.svg"
-    static blogPost1 : string = 'images/svg/blog/1.svg'
-    static blogPost2 : string = 'images/svg/blog/2.svg'
-    static blogPost3 : string = 'images/svg/blog/3.svg'
+    static svgService : string = "/images/svg/service.svg"
+    static svgPattern : string = "/images/svg/pattern.svg"
+    static blogPost1 : string = '/images/svg/blog/1.svg'
+    static blogPost2 : string = '/images/svg/blog/2.svg'
+    static blogPost3 : string = '/images/svg/blog/3.svg'
+    static agent : string = '/images/svg/agent.svg'
 
     /********************* JPG ********************** */
     static researcher : string = "/images/jpg/researcher.jpg"

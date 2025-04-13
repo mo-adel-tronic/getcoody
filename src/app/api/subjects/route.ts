@@ -11,7 +11,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const req = await request.json();
-  let { id, title, title_prefix, targets } = req;
+  const { id, title, title_prefix, targets } = req;
   if (!title || !targets || !id || !title_prefix) {
     return NextResponse.json(
       {

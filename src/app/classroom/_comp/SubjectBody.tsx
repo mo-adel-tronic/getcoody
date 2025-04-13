@@ -1,16 +1,19 @@
-import { getCurrentLesson, getsubjectLessons } from "@/api/lessons";
+import { getCurrentLesson, getsubjectLessons, getUserTrackingInSubject } from "@/api/lessons";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoutesName } from "@/core/utils/constants";
-import { SubjectEntity, LessonEntity } from "@/types";
+import { SubjectEntity, LessonEntity, UserTracker, UserEntity } from "@/types";
 import AppLink from "@/ui/atoms/controls/AppLink";
 import { BookOpen, CheckCircle } from "lucide-react";
 import React from "react";
+import CompleteSubjectBtn from "./CompleteSubjectBtn";
 
 type Props = {
   subject: SubjectEntity;
   userId: number;
   isSubjectEnd: boolean;
+  countSubjects: number;
+  userData: UserEntity
 };
 type CardItemsType = "lesson" | "target";
 interface SubjectCardProps {
@@ -31,13 +34,33 @@ export default async function SubjectBody({
   subject,
   userId,
   isSubjectEnd,
+  countSubjects,
+  userData
 }: Props) {
   const targets: string[] = JSON.parse(subject.targets);
-  const lessons = (await getsubjectLessons(subject.id)).data;
+  const lessons : LessonEntity[] = (await getsubjectLessons(subject.id)).data;
   const currentLesson = (await getCurrentLesson(subject.id, userId)).data[0];
-  var isAfterCurrent = false;
+  const lessonTracking : UserTracker[] = (await getUserTrackingInSubject(subject.id, userId)).data;
+  const isSubjectBtnCanAppear= () => {
+    if (lessons.length !== lessonTracking.length) {
+      return false
+    }
+    return lessonTracking.every((lesson) => {
+      const lessonData = lessons.find((less) => less.id === lesson.lesson_id);
+      let skipTask = true
+      let skipActivity = true
+      if (lesson.task == 0 && lessonData && lessonData.task_details) {
+        skipTask = false
+      }
+      if(lesson.activity_attempts == 0 && lessonData && lessonData.activity_details) {
+        skipActivity = false
+      }
+      return skipActivity && skipTask
+    })
+  }
+  let isAfterCurrent = false;
   const lessonsTitles = lessons.map((lesson: LessonEntity) => {
-    var badge = (
+    let badge = (
       <Badge className="bg-green-600 text-white">تم دراسة المحتوي</Badge>
     );
     if (!isSubjectEnd) {
@@ -61,7 +84,6 @@ export default async function SubjectBody({
       badge: badge,
     };
   });
-  console.log(isSubjectEnd);
   return (
     <div>
       <div className="flex flex-1 flex-col md:flex-row md:justify-evenly gap-4 p-4 pt-0">
@@ -82,11 +104,12 @@ export default async function SubjectBody({
         />
       </div>
 
-      <div>
+      <div className="flex items-center justify-around">
+        <div className="w-1/2">
         {isSubjectEnd ? (
           <AppLink
             href={`${RoutesName.subject}/${subject.id}/lessons/${lessons[0].id}`}
-            className="!w-2/6 mb-4 text-center bg-secondary hover:bg-secondary-hover mx-auto"
+            className="mb-4 text-center bg-secondary hover:bg-secondary-hover mx-auto"
           >
             <span className="text-secondary-foreground font-bold">
               مشاهدة الدروس مرة أخري
@@ -95,7 +118,7 @@ export default async function SubjectBody({
         ) : currentLesson ? (
           <AppLink
             href={`${RoutesName.subject}/${subject.id}/lessons/${currentLesson.lessonID}`}
-            className="!w-1/6 mb-4 text-center bg-secondary hover:bg-secondary-hover mx-auto"
+            className="mb-4 text-center bg-secondary hover:bg-secondary-hover mx-auto"
           >
             <span className="text-secondary-foreground font-bold">
               استكمل الدراسة
@@ -104,12 +127,16 @@ export default async function SubjectBody({
         ) : (
           <AppLink
             href={`${RoutesName.subject}/${subject.id}/lessons/${lessons[0].id}`}
-            className="!w-1/6 mb-4 text-center bg-secondary hover:bg-secondary-hover mx-auto"
+            className="mb-4 text-center bg-secondary hover:bg-secondary-hover mx-auto"
           >
             <span className="text-secondary-foreground font-bold">
               إبدء الأن
             </span>
           </AppLink>
+        )}
+        </div>
+        {(isSubjectBtnCanAppear() && !isSubjectEnd && userData.learning_passed && userData.learning_passed <= countSubjects) && (
+          <CompleteSubjectBtn userId={userId} newLevel={userData.learning_passed+1} />
         )}
       </div>
     </div>

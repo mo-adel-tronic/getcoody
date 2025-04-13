@@ -1,6 +1,5 @@
 import { LayoutType, LessonEntity, MainNavItemType, SubjectEntity } from "@/types";
 import { PagesName, RoutesName } from "../utils/constants";
-import { BookOpen } from "lucide-react";
 
 export function isSubjectOpen(
   subjectId: number,
@@ -82,7 +81,7 @@ export default function MainNavHelper(
     isActive: active.startsWith(RoutesName.subject),
     items: subjects?.length && subjects.length?subjects.map((subject) => {
       return {
-        title: subject.title_prefix,
+        title: subject.title,
         url: `${RoutesName.subject}/${subject.id}`,
         icon:
           currentSubject &&

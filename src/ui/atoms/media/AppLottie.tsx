@@ -9,9 +9,10 @@ const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then(mod
 
 interface LottieProps {
     src: string;
+    width?: string
 }
 
-const AppLottie: React.FC<LottieProps> = React.memo(({ src }) => {
+const AppLottie: React.FC<LottieProps> = React.memo(({ src, width='w-[400px]' }:LottieProps) => {
     const [isInView, setIsInView] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const playerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +35,6 @@ const AppLottie: React.FC<LottieProps> = React.memo(({ src }) => {
         if (currentRef) {
             observer.observe(currentRef);
         }
-
         return () => {
             if (currentRef) {
                 observer.unobserve(currentRef);
@@ -49,7 +49,8 @@ const AppLottie: React.FC<LottieProps> = React.memo(({ src }) => {
                 <Player
                     speed={0.6}
                     src={src}
-                    className="player w-[400px]"
+                    className={`player ${width}`}
+                    background="transparent"
                     autoplay
                     loop
                     onEvent={(event) => {

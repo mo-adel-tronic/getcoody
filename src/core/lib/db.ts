@@ -30,3 +30,5 @@ export async function queryWithCache<T>(sql: string, params: any[] = []): Promis
     throw error
   }
 }
+
+export default pool

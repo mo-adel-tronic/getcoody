@@ -1,4 +1,4 @@
-import { Activity, CheckCheck, User2Icon } from "lucide-react";
+import { Activity, CheckCheck, LucideExternalLink, User2Icon } from "lucide-react";
 import AppContainer from "../atoms/blocks/AppContainer";
 import AppSection from "../atoms/blocks/AppSection";
 import AppSmallCard from "../atoms/blocks/AppSmallCard";
@@ -11,21 +11,26 @@ export default function ServiceSection() {
     <AppSection withBG={true}>
       <AppContainer reverseCol={false} className="items-center">
         <div className="grid gap-y-8">
-          <H2 text="الخدمات" />
+          <H2 text="جودة المحتوى التعليمي" />
           <AppSmallCard
             icon={<User2Icon size={'40px'} className="text-secondary-hover" />}
-            title="الحسابات الشخصية"
-            body="لديك العديد من المزايا العديدة بامتلاكك حساب لدينا حيث توجد متابعة ونتائج رقمية تساعدك علي اتخاذ القرار التعليمي المناسب وتتعرف علي ما تم انجازه"
+            title="الدروس"
+            body="يتم تقديم أساليب متنوعة لعرض المحتوى المطلوب دراسته حيث تشمل الفيديو المسجلة من قبل المعلم والتي يظهر فيها داخل الفيديو لجعل التجربة أكثر فاعلية بالإضافة إلى النصوص والصور والرسوم الجرافيكية المساعدة"
           />
           <AppSmallCard
             icon={<CheckCheck size={'40px'} className="text-secondary-hover" />}
-            title="التغذية الراجعة الذكية"
-            body="تتميز المنصة لدينا بوجود تغذية راجعة واستجابات قائمة علي الذكاء الاصطناعي حيث يتم توجيهك في كل نشاط تقوم به بشرح واف من خلال الوكيل الذكي"
+            title="الأنشطة التعليمية"
+            body="يمكنك كتابة الأكواد البرمجية داخل الدرس في بيئة تحاكي محرر الأكواد الحقيقي ومدعومة بالوكيل الذكي الذي يقدم مستوى مميز من الدعم الذي يساعدك على إنهاء النشاط بنجاح"
           />
           <AppSmallCard
             icon={<Activity size={'40px'} className="text-secondary-hover" />}
-            title="التفاعلية"
-            body="تتميز المنصة بأشكال مختلفة من التفاعل فهناك تفاعل اجتماعي من خلال المنشورات بين الأصدقاء في نفس الصف والتفاعل مع المنصة والمحتوي المقدم"
+            title="التكليفات"
+            body="يتم إرسال التكليفات في المجلد الخاص بك وذلك لمراجعتها من قبل المعلم والتأكد من أن ما تم دراسته حقق الهدف التعليمي المرغوب"
+          />
+          <AppSmallCard
+            icon={<LucideExternalLink size={'40px'} className="text-secondary-hover" />}
+            title="المصادر الخارجية"
+            body="حيث يتم دعم محتوى الدرس بمصادر خارجية أخرى للتعلم تتميز بالتنوع ما بين فيديو أو مقالات عملية"
           />
         </div>
 

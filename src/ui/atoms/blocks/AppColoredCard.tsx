@@ -4,7 +4,7 @@ interface AppColoredCardProps {
     bgClass?: string;
     textColorClass?: string;
     title: string;
-    body: string;
+    body: string | React.ReactElement;
 }
 export default function AppColoredCard({
     bgClass = 'bg-primary',

@@ -37,7 +37,7 @@ export default async function SubjectPage({params} :  {
     pre={<></>}
     main={
       isSubjectOpen(parseInt(id), userData.learning_passed ?? 1) ?
-      <SubjectBody subject={subject} userId={userData.id || 0} isSubjectEnd={(userData.learning_passed || 1) > parseInt(id)} /> : 
+      <SubjectBody subject={subject} userId={userData.id || 0} isSubjectEnd={(userData.learning_passed || 1) > parseInt(id)} countSubjects={subjects.length} userData={userData} /> : 
       <div className="flex justify-center items-center flex-col grow">
         <h1>لا يمكنك دراسة هذا الموضوع الأن ... يجب الإنتهاء أولًا من الموضوع السابق</h1>
       </div>

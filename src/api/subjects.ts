@@ -12,7 +12,7 @@ export async function getAllSubjects(): Promise<AppResponse> {
                 error: false
             });
         }, ['/subjects'], {revalidate: 1800})
-        let d = await data()
+        const d = await data()
         return d;
     } catch (error) {
         return {

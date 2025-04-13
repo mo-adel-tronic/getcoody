@@ -1,5 +1,5 @@
 import AppLoader from "@/ui/atoms/media/AppLoader";
-import { LayoutType, LessonEntity } from "@/types";
+import { LayoutType, LessonEntity, UserEntity, UserTracker } from "@/types";
 import { notFound } from "next/navigation";
 import LessonTemplate from "./LessonTemplate";
 
@@ -9,8 +9,10 @@ interface Props {
   currentLessonId: number
   lessons: LessonEntity[]
   lesson: LessonEntity
+  userTracking: UserTracker,
+  userData: UserEntity
 }
-export default async function LessonLayout({layout, subjectId, currentLessonId, lessons, lesson}: Props) {
+export default async function LessonLayout({layout, subjectId, currentLessonId, lessons, lesson, userTracking, userData}: Props) {
 
     if (layout == 'loading') {
         return (
@@ -24,6 +26,8 @@ export default async function LessonLayout({layout, subjectId, currentLessonId, 
         subjectId={subjectId}
         currentLessonId={currentLessonId}
         lesson={lesson}
+        userTracking={userTracking}
+        userData={userData}
         />
     } else {
         notFound()

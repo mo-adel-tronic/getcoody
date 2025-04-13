@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const req = await request.json();
-  let { title, lesson_order, subject_id } = req;
+  const { title, lesson_order, subject_id } = req;
   if (!title || !lesson_order || !subject_id) {
     return NextResponse.json(
       {
