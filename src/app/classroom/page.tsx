@@ -6,6 +6,9 @@ import { layoutHandler } from "@/core/lib/LayoutHandler";
 
 export default async function page() {
   const [layout, userData, subjects] = await layoutHandler();
+  if(!userData.email) {
+  notfound();
+  }
   return (
     <DefaultLayout
     layout={layout}
