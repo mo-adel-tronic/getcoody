@@ -4,6 +4,8 @@ import { PagesName, RoutesName } from "@/core/utils/constants";
 import ClassroomBody from "./_comp/ClassroomBody";
 import { layoutHandler } from "@/core/lib/LayoutHandler";
 import { notFound } from "next/navigation";
+import { authOptions } from "@/core/utils/NextAuth";
+import { getServerSession } from "next-auth";
 
 export default async function page() {
   const [layout, userData, subjects] = await layoutHandler();
