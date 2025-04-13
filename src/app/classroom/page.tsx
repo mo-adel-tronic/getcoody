@@ -3,12 +3,12 @@ import DefaultLayout from "./_comp/DefaultLayout";
 import { PagesName, RoutesName } from "@/core/utils/constants";
 import ClassroomBody from "./_comp/ClassroomBody";
 import { layoutHandler } from "@/core/lib/LayoutHandler";
+import { notFound } from "next/navigation";
 
 export default async function page() {
   const [layout, userData, subjects] = await layoutHandler();
-  if(!userData.email) {
-  notfound();
-  }
+  const session = await getServerSession(authOptions)
+  if (session && session.user?.email) {} else {notFound()}
   return (
     <DefaultLayout
     layout={layout}
