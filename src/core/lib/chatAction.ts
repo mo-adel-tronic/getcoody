@@ -1,35 +1,21 @@
 import { AgentResponse } from "@/types";
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
-export async function myStartChat(key: string, myCode: {
-  task: string;
-  studentCode: object;
-}) : Promise<{issues: AgentResponse[]}> {
+export async function myStartChat(
+  key: string,
+  myCode: { task: string; studentCode: object }
+): Promise<{ issues: AgentResponse[] }> {
   const genAI = new GoogleGenerativeAI(key);
-  
+
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: {
-      role: "get report for student's dart code in json formatting, flutter apps and classify issues into four categories in arabic language",
+      role: "get report for student's Dart/Flutter code as JSON, classify issues in Arabic.",
       parts: [
-        {
-          text: "Example of Response when code is correct: {feedback: 'لقد قمت بعمل رائع', level: 'أحسنت'}"
-        },
-        {
-          text: "Example of Response when code has a problem: {feedback: 'هناك مشكلة ما حاول مرة أخرى', line: <ERROR-LINE_NUMBER>, page: <PAGE-PATH>, issue: <DESCRIPE-ERROR>, suggestion: <SUGGESSION-FOR-SOLVING-ERROR>, level: <خطأ|تنبية|تحذير>}"
-        },
-        {
-          text: "category1: `خطأ` This is a critical issue that prevents the code from compiling or running. - Example of Error: Missing a semicolon (;) in Dart.",
-        },
-        {
-          text: "category2: `تنبية` This is a suggestion to improve code quality, maintainability, or performance. - Example: Using final instead of var when the value does not change."
-        },
-        {
-          text: "category3: `تحذير` This is a potential issue that does not prevent execution but may cause unexpected behavior. - Example: Declaring an unused variable"
-        },
-        {
-          text: "category4: `أحسنت` this has got when there is no problem in the code"
-        }
+        { text: "If code is correct, respond with: {feedback: 'لقد قمت بعمل رائع', level: 'أحسنت'}" },
+        { text: "If there's an issue, respond like: {feedback: 'هناك مشكلة ما حاول مرة أخرى', line: <ERROR-LINE_NUMBER>, page: <PAGE-PATH>, issue: <وصف الخطأ>, suggestion: <اقتراح للحل>, level: <خطأ|تنبية|تحذير>}" },
+        { text: "Category levels:\n- `خطأ`: Critical, stops code from running.\n- `تنبية`: Suggestion to improve code.\n- `تحذير`: Potential issue.\n- `أحسنت`: No problems." },
+        { text: "Keep JSON short and avoid hitting token limit. Only include the most important issues." }
       ]
     },
     generationConfig: {
@@ -47,21 +33,43 @@ export async function myStartChat(key: string, myCode: {
                 issue: { type: SchemaType.STRING },
                 suggestion: { type: SchemaType.STRING },
                 level: { type: SchemaType.STRING },
-                feedback: {type: SchemaType.STRING}
-              },
-            },
-          },
-        },
-      },
-    },
+                feedback: { type: SchemaType.STRING }
+              }
+            }
+          }
+        }
+      }
+    }
   });
 
   const chat = model.startChat();
   const result = await chat.sendMessageStream(JSON.stringify(myCode));
-  let text = "";
+
+  let responseText = "";
   for await (const chunk of result.stream) {
-    const chunkText = chunk.text();
-    text += chunkText;
+    responseText += chunk.text();
   }
-  return JSON.parse(text)
+
+  try {
+    // Try parsing as-is
+    return JSON.parse(responseText);
+  } catch (error) {
+    console.warn("❗JSON parse failed. Attempting to repair...");
+    
+    // Try to repair (basic fix for missing closing brackets)
+    let fixed = responseText.trim();
+
+    // Heuristic: close open object or array
+    if (!fixed.endsWith("}")) fixed += "}";
+    if (!fixed.includes("issues")) {
+      throw new Error("Response from Gemini was incomplete and not recoverable.");
+    }
+
+    try {
+      return JSON.parse(fixed);
+    } catch (repairError) {
+      console.error("🚨 Still failed to parse:", repairError, "\nResponse:\n", fixed);
+      throw new Error("Invalid JSON from Gemini after stream. Try sending smaller input.");
+    }
+  }
 }
