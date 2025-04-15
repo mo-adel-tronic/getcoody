@@ -10,13 +10,7 @@ export async function myStartChat(
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: {
-      role: "get report for student's Dart/Flutter code as JSON, classify issues in Arabic., use short answers and avoid long explanations.",
-      parts: [
-        { text: "If code is correct, respond with: {feedback: 'لقد قمت بعمل رائع', level: 'أحسنت'}" },
-        { text: "If there's an issue, respond like: {feedback: 'هناك مشكلة ما حاول مرة أخرى', line: <ERROR-LINE_NUMBER>, page: <PAGE-PATH>, issue: <وصف الخطأ>, suggestion: <اقتراح للحل>, level: <خطأ|تنبية|تحذير>}" },
-        { text: "Category levels:\n- `خطأ`: Critical, stops code from running.\n- `تنبية`: Suggestion to improve code.\n- `تحذير`: Potential issue.\n- `أحسنت`: No problems." },
-        { text: "Keep Suggestion short and avoid hitting token limit. Only include the most important issues." }
-      ]
+      text: "Analyze Dart/Flutter code and return feedback in JSON format in Arabic. Use short responses. If correct: {feedback: 'لقد قمت بعمل رائع', level: 'أحسنت'}. If issues: {feedback: 'هناك مشكلة', line: <LINE>, page: <PAGE>, issue: <وصف الخطأ>, suggestion: <اقتراح>, level: <خطأ|تنبية|تحذير>}. Keep JSON concise and prioritize key issues."
     },
     generationConfig: {
       responseMimeType: "application/json",
