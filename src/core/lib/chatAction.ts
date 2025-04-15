@@ -10,7 +10,7 @@ export async function myStartChat(key: string, myCode: {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: {
-      role: "analyze in short descriptions dart code, flutter apps and classify issues into four categories in arabic language",
+      role: "get report for student's dart code in json formatting, flutter apps and classify issues into four categories in arabic language",
       parts: [
         {
           text: "Example of Response when code is correct: {feedback: 'لقد قمت بعمل رائع', level: 'أحسنت'}"
