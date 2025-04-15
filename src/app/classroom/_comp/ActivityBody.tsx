@@ -168,11 +168,7 @@ export default function ActivityBody({
                     {
                       title: "رقم السطر",
                       content: res.line?.toString(),
-                    },
-                    {
-                      title: "المقترح",
-                      content: res.suggestion,
-                    },
+                    }
                   ]}
                 />
               </div>
