@@ -10,7 +10,7 @@ export async function myStartChat(
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: {
-      text: "Analyze Dart/Flutter code and return JSON feedback in Arabic. Respond only with valid JSON. Avoid long or corrupted file paths. Keep file names like "/lib/main.dart" simple. Keep response under token limits. Examples: ✅ Correct: {feedback: 'أحسنت', level: 'أحسنت'} ❌ With issues: {feedback: 'هناك مشكلة', line: 12, page: '/lib/home.dart', issue: '...', suggestion: '...', level: 'خطأ'}"
+      text: "Analyze Dart/Flutter code and return JSON feedback in Arabic. Respond only with valid JSON. Avoid long or corrupted file paths. Keep file names like '/lib/main.dart' simple. Keep response under token limits. Examples: ✅ Correct: {feedback: 'أحسنت', level: 'أحسنت'} ❌ With issues: {feedback: 'هناك مشكلة', line: 12, page: '/lib/home.dart', issue: '...', suggestion: '...', level: 'خطأ'}"
     },
     generationConfig: {
       responseMimeType: "application/json",
