@@ -10,7 +10,7 @@ export async function myStartChat(
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: {
-      text: "Analyze Dart/Flutter code and return feedback in JSON format in Arabic. Use short responses. If correct: {feedback: 'لقد قمت بعمل رائع', level: 'أحسنت'}. If issues: {feedback: 'هناك مشكلة', line: <LINE>, page: <PAGE>, issue: <وصف الخطأ>, suggestion: <اقتراح>, level: <خطأ|تنبية|تحذير>}. Keep JSON concise and prioritize key issues."
+      text: "Analyze Dart/Flutter code and return JSON feedback in Arabic. Respond only with valid JSON. Avoid long or corrupted file paths. Keep file names like "/lib/main.dart" simple. Keep response under token limits. Examples: ✅ Correct: {feedback: 'أحسنت', level: 'أحسنت'} ❌ With issues: {feedback: 'هناك مشكلة', line: 12, page: '/lib/home.dart', issue: '...', suggestion: '...', level: 'خطأ'}"
     },
     generationConfig: {
       responseMimeType: "application/json",
@@ -59,10 +59,34 @@ export async function myStartChat(
     }
 
     try {
-      return JSON.parse(fixed);
-    } catch (repairError) {
-      console.error("🚨 Still failed to parse:", repairError, "\nResponse:\n", fixed);
-      throw new Error("Invalid JSON from Gemini after stream. Try sending smaller input.");
-    }
+  return JSON.parse(responseText);
+} catch (error) {
+  console.warn("❗JSON parse failed. Attempting manual repair...");
+
+  // Heuristic: Trim and sanitize
+  let fixed = responseText.trim();
+
+  // If there's an unclosed string (e.g., `"page": "/lib/...` without closing quote)
+  const lastQuoteIndex = fixed.lastIndexOf('"');
+  const lastColonIndex = fixed.lastIndexOf(':');
+  
+  // If the last string wasn't closed properly, close it
+  if (lastColonIndex > 0 && lastQuoteIndex < lastColonIndex) {
+    // Try to clip to the last valid quote
+    fixed = fixed.substring(0, lastColonIndex) + '"/lib/main.dart" }]}';
+  }
+
+  // Close braces/brackets
+  if (!fixed.endsWith("}")) fixed += "}";
+  if (!fixed.endsWith("}]}")) fixed = fixed.replace(/}+$/, "") + "}]}";
+
+  try {
+    return JSON.parse(fixed);
+  } catch (repairError) {
+    console.error("🚨 Still failed to parse:", repairError, "\nResponse:\n", fixed);
+    throw new Error("Invalid JSON from Gemini after stream. Try reducing input size or simplify prompt.");
+  }
+}
+
   }
 }
