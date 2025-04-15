@@ -84,7 +84,8 @@ export interface AgentResponse {
   page: string;
   level: "خطأ" | "تحذير" | "تنبية" | "أحسنت";
   line: number;
-  feedback: string
+  feedback: string;
+  suggestion: string;
 }
 
 export interface UserTracker {
