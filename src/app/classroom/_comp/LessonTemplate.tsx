@@ -204,7 +204,7 @@ export default async function LessonTemplate({
                       <Card className="relative">
                         <div className="absolute left-4 top-[50%] -translate-y-1/2">{
                           userTracking.task == 2 ? <Badge variant={'destructive'}>راجع التعديلات</Badge> :
-                          userTracking.task == 1 ? <Badge variant={'default'} className="bg-green-600 text-white">لا يوجد تعديلات</Badge> : <></>
+                          userTracking.task == 1 ? <Badge variant={'default'} className="bg-green-600 text-white">تم رفع تكليفك بنجاح ... سيقوم المعلم بتوضيح إذا كان لديك قصور في وقت لاحق</Badge> : <></>
                         }</div>
                         <CardHeader>
                           <CardTitle><H3 text={lesson.task_details} /></CardTitle>
