@@ -1,6 +1,6 @@
 'use server'
 
-import { AppResponse } from "@/types";
+import { AppResponse, UserTracker } from "@/types";
 import { query } from "./db";
 import { revalidatePath } from "next/cache";
 
@@ -24,6 +24,14 @@ export async function updateUserLevel(userId: number, newLevel: number): Promise
 
 export async function addUserTracker(userId: number, lessonId: number): Promise<AppResponse> {
     try {
+        const s : UserTracker[] = await query("SELECT * FROM lesson_tracking WHERE lesson_id = ? AND user_id = ?", [lessonId, userId])
+        if (s.length > 0) {
+            return Promise.resolve({
+                message: '1',
+                data: null,
+                error: false
+            });
+        }
         const req = await query("INSERT INTO lesson_tracking (lesson_id, user_id) VALUES (?, ?)", [lessonId, userId])
         revalidatePath('/', 'layout')
         return Promise.resolve({
